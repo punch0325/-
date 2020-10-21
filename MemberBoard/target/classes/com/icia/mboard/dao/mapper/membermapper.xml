@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Member"> 
+	
+	<select id="idOverlap" parameterType="String" resultType="String">
+		SELECT MID FROM MEMBER WHERE MID=#{mid}
+	</select>
+	
+	<insert id="memberJoin" parameterType="member">
+		INSERT INTO MEMBER(MID,MPW,MNAME,MBIRTH,MEMAIL,MADDRESS,MPHONE,MFILENAME)
+		 VALUES(#{mid},#{mpw},#{mname},#{mbirth},#{memail},#{maddress},#{mphone},#{mfilename})
+	</insert>
+	
+	<insert id="kakaoJoin" parameterType="member">
+ 		INSERT INTO MEMBER(MID,MPW,MNAME,MBIRTH,MEMAIL,MADDRESS,MPHONE,MFILENAME,KAKAOID) VALUES
+ 		(#{mid},#{mpw},#{mname},#{mbirth},#{memail},#{maddress},#{mphone},#{mfilename},#{kakaoId})
+ 	</insert>
+ 	
+ 	<insert id="naverJoin" parameterType="member">
+ 		INSERT INTO MEMBER(MID,MPW,MNAME,MBIRTH,MEMAIL,MADDRESS,MPHONE,MFILENAME,NAVERID) VALUES
+ 		(#{mid},#{mpw},#{mname},#{mbirth},#{memail},#{maddress},#{mphone},#{mfilename},#{naverId})
+ 	</insert>
+	
+	<select id="memberLogin" parameterType="member" resultType="String">
+		SELECT MID FROM MEMBER WHERE MID=#{mid} AND MPW=#{mpw}
+	</select>
+	
+	<select id="kakaoLogin" parameterType="member" resultType="String">
+		SELECT MID FROM MEMBER WHERE KAKAOID=#{kakaoId}
+	</select>
+	
+	<select id="naverLogin" parameterType="member" resultType="String">
+		SELECT MID FROM MEMBER WHERE NAVERID=#{naverId}
+	</select>
+	
+	<select id="memberList" resultType="member">
+		SELECT * FROM MEMBER
+	</select>
+	
+	<select id="memberView" parameterType="String" resultType="member">
+		SELECT * FROM MEMBER WHERE MID=#{mid}
+	</select>
+	
+	<update id="memberUpdate" parameterType="member">
+		UPDATE MEMBER SET MPW=#{mpw}, MNAME=#{mname}, MBIRTH=#{mbirth}, MEMAIL=#{memail}, MADDRESS=#{maddress}, MPHONE=#{mphone}, MFILENAME=#{mfilename} WHERE MID=#{mid}
+	</update>
+	
+	<delete id="memberDelete" parameterType="String">
+		DELETE FROM MEMBER WHERE MID=#{mid}
+	</delete>
+	
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

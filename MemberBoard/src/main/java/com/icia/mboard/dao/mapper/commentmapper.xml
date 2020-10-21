@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Comment"> 
+	
+	<insert id="commentWrite" parameterType="comment">
+		INSERT INTO COMMENTTABLE(CNUMBER,CBNUMBER,CWRITER,CCONTENTS)
+		 VALUES(SEQ_COM.NEXTVAL,#{cbnumber},#{cwriter},#{ccontents})
+	</insert>
+	
+	<select id="commentList" parameterType="int" resultType="comment">
+		SELECT * FROM COMMENTTABLE WHERE CBNUMBER=#{cbnumber}
+	</select>
+	
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM COMMENTTABLE WHERE CBNUMBER=#{bnumber}
+	</delete>
+	
+	<delete id="mCommentDelete" parameterType="String">
+		DELETE FROM COMMENTTABLE WHERE CWRITER=#{mid}
+	</delete>
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

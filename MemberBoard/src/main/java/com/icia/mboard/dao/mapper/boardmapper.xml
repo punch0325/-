@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Board"> 
+	
+	<insert id ="boardWrite" parameterType="board">
+		INSERT INTO BOARD(BNUMBER,BWRITER,BTITLE,BCONTENTS,BDATE,BHITS,BFILENAME) VALUES(SEQ_BOA.NEXTVAL,#{bwriter},#{btitle},#{bcontents},SYSDATE,0,#{bfilename})
+	</insert>
+	
+	<select id="boardList" resultType="board">
+		SELECT * FROM BOARD
+	</select>
+	
+	<select id="boardListCount" resultType="int">
+		SELECT COUNT(BNUMBER) FROM BOARD
+	</select>
+	
+	<select id="boardListPaging" parameterType="paging" resultType="board">
+		SELECT * FROM(SELECT B.*, ROW_NUMBER() OVER(ORDER BY BNUMBER DESC) AS RN FROM BOARD B) WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<update id="boardHits" parameterType="int">
+		UPDATE BOARD SET BHITS=BHITS+1 WHERE BNUMBER=#{bnumber}
+	</update>
+	
+	<select id="boardView" parameterType="int" resultType="board">
+		SELECT * FROM BOARD WHERE BNUMBER=#{bnumber}
+	</select>
+	
+	<update id="boardUpdate" parameterType="board">
+		UPDATE BOARD SET BTITLE=#{btitle}, BCONTENTS=#{bcontents}, 
+		BFILENAME=#{bfilename} WHERE BNUMBER=#{bnumber}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		DELETE FROM BOARD WHERE BNUMBER=#{bnumber}
+	</delete>
+	
+	<select id="boardSearch" parameterType="java.util.HashMap" resultType="board">
+		SELECT * FROM BOARD
+		<include refid="s"></include>
+	</select>
+	<sql id="s">
+		<choose>
+			<when test="search == 'swriter'">
+				WHERE BWRITER LIKE '%'||#{keyword}||'%'
+			</when>
+			<when test="search == 'stitle'">
+				WHERE BTITLE LIKE '%'||#{keyword}||'%'
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="boardArray" resultType="board">
+		SELECT * FROM BOARD ORDER BY BHITS DESC
+	</select>
+	
+	<delete id="mBoardDelete" parameterType="String">
+		DELETE FROM BOARD WHERE BWRITER=#{mid}
+	</delete>
+	
+	<select id="myList" parameterType="String" resultType="board">
+		SELECT * FROM BOARD WHERE BWRITER=#{mid}
+	</select>
+	
+	<select id="bCount" parameterType="String" resultType="int">
+		SELECT COUNT(BNUMBER) FROM BOARD WHERE BWRITER=#{mid}
+	</select>
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
